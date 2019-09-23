@@ -1,4 +1,6 @@
+from sklearn.feature_extraction.text import CountVectorizer
 docs = ['doc1.txt', 'doc2.txt', 'doc3.txt']
+
 bag_of_words = []
 corpus = []
 stop_words = ['all', 'six', 'less', 'being', 'indeed', 'over', 'move', 'anyway', 'fifty', 'four', 'not', 'own',
@@ -25,13 +27,16 @@ for doc in corpus:
     term_freq.append([1 if item in doc.lower().split() else 0 for item in bag_of_words])
 print('Frecuencia:',term_freq)
 
-notin_stopwords = [[item for item in bag_of_words if item not in stop_words]]
+notin_stopwords = [item for item in bag_of_words if item not in stop_words]
 print('Not in STOP WORDS: ',notin_stopwords)
 
 term_freq_notinsw = []
-prueba= notin_stopwords
-print('PRUEBA:',prueba)
 
 for doc in corpus:
     term_freq_notinsw.append([1 if item in doc.lower().split() else 0 for item in notin_stopwords])
 print('Frecuencia NOT IN STOP WODS:', term_freq_notinsw)
+
+vectorizer  = CountVectorizer()
+x = vectorizer.fit_transform(corpus)
+print(vectorizer.get_feature_names())
+print(str(x))
